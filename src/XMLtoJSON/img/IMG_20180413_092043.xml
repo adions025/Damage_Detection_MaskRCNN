@@ -1,0 +1,38 @@
+<annotation>
+	<folder>keuring</folder>
+	<filename>IMG_20180413_092043.jpg</filename>
+	<path>D:\Seafile\Archive\Projects\125 IWAUC\WP1\fotos 04-13-2018\keuring\IMG_20180413_092043.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>2976</width>
+		<height>3968</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>SD</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1411</xmin>
+			<ymin>1767</ymin>
+			<xmax>1669</xmax>
+			<ymax>1983</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>SD</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1307</xmin>
+			<ymin>2337</ymin>
+			<xmax>1415</xmax>
+			<ymax>2454</ymax>
+		</bndbox>
+	</object>
+</annotation>
