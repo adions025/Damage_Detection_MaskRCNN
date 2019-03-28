@@ -19,11 +19,17 @@ import matplotlib.pyplot as plt
 from matplotlib import patches,  lines
 from matplotlib.patches import Polygon
 import IPython.display
+import matplotlib as mpl
+import skimage.draw
+import datetime
+
 
 from PIL import Image, ImageDraw, ImageFont
 
 # Root directory of the project
 ROOT_DIR = os.path.abspath("../")
+
+#where we save the results of predections
 
 # Import Mask RCNN
 sys.path.append(ROOT_DIR)  # To find local version of the library
@@ -82,7 +88,7 @@ def apply_mask(image, mask, color, alpha=0.5):
     return image
 
 
-def display_instances(image, boxes, masks, class_ids, class_names,
+def display_instances(path, image, boxes, masks, class_ids, class_names,
                       scores=None, title="",
                       figsize=(16, 16), ax=None,
                       show_mask=True, show_bbox=True,
@@ -99,6 +105,9 @@ def display_instances(image, boxes, masks, class_ids, class_names,
     colors: (optional) An array or colors to use with each object
     captions: (optional) A list of strings to use as captions for each object
     """
+
+    #mpl.rcParams["savefig.directory"] = pathsave
+
     # Number of instances
     N = boxes.shape[0]
     if not N:
@@ -166,10 +175,22 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             ax.add_patch(p)
     ax.imshow(masked_image.astype(np.uint8))
 
-    if auto_show:
-        plt.show()
 
-        #plt.savefig(resultados)
+    if auto_show:
+
+        fig = plt.gcf()
+        #fig.show()
+
+        fig.savefig(path)
+        #file_name = "predection_{:%Y%m%dT%H%M%S}.png".format(datetime.datetime.now())
+
+        #skimage.io.imsave(file_name, path)
+        print("saving images in dataset/results")
+
+
+
+
+
 
 
 def display_differences(image,
@@ -594,8 +615,13 @@ def save_image(image, image_name, boxes, masks, class_ids, scores, class_names, 
             draw.rectangle((x1, y1, x2, y2), outline=color)
 
         # Label
+        #font = ImageFont.truetype('arial.ttf', 15)
+        #"/usr/share/fonts/truetype/freefont/FreeMono.ttf"
         font = ImageFont.truetype('/Library/Fonts/Arial.ttf', 15)
+
         draw.text((x1, y1), "%s %f" % (label, score), (255, 255, 255), font)
+
+
 
     masked_image.save(os.path.join(save_dir, '%s.jpg' % (image_name)))
 
