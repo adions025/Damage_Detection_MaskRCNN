@@ -37,7 +37,7 @@ ROOT_DIR = os.path.abspath("../../")
 sys.path.append(ROOT_DIR)
 
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
-DAMAGE_DETECTION_MODEL = os.path.join(ROOT_DIR, "logs/damage20190326T1616/mask_rcnn_damage_0020.h5")
+DAMAGE_DETECTION_MODEL = os.path.join(ROOT_DIR, "logs/damage20190328T1633/mask_rcnn_damage_0020.h5")
 val = os.path.join(ROOT_DIR, "dataset/val")
 resultados = os.path.join(ROOT_DIR, "dataset/results")
 
@@ -57,7 +57,10 @@ print("--------------------------------------------")
 
 #mpl.rcParams["savefig.directory"] = resultados #it doesnt work
 
-#just create a new imageval.txt file, with new validation dataset
+'''
+just create a new imageval.txt file, with new validation dataset
+if you use the same validation dataset, you can delete this loop
+'''
 files = os.listdir(val)
 with open(val + '/imageval.txt', 'w') as f:  # /img/image.txt
     for item in files:
@@ -65,12 +68,14 @@ with open(val + '/imageval.txt', 'w') as f:  # /img/image.txt
             f.write("%s\n" % item)
 
 #read the new dataset and copy in results
+
 imgs_list = open(val+'/imageval.txt','r').readlines()
+''''
 for img in imgs_list:
     if 'jpg' in img:
         img_name = img.strip().split('/')[-1]
         os.system('cp'+ ' '+ val+'/'+img_name + ' '+resultados)
-
+'''
 #save the images in /results
 for img in imgs_list:
     if 'jpg' in img:
