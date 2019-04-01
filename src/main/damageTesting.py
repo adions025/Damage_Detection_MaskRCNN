@@ -37,7 +37,7 @@ ROOT_DIR = os.path.abspath("../../")
 sys.path.append(ROOT_DIR)
 
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
-DAMAGE_DETECTION_MODEL = os.path.join(ROOT_DIR, "logs/damage20190328T1633/mask_rcnn_damage_0020.h5")
+DAMAGE_DETECTION_MODEL = os.path.join(ROOT_DIR, "logs/damage20190329T1140/mask_rcnn_damage_0100.h5")
 val = os.path.join(ROOT_DIR, "dataset/val")
 resultados = os.path.join(ROOT_DIR, "dataset/results")
 
