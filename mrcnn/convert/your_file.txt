@@ -1,8 +1,0 @@
-test.py
-convertXMLtoJSON.py
-DSC_9464.xml
-test2.py
-IMG_20180413_092050.jpg
-IMG_20180413_091455.jpg
-via_region_data.json
-IMG_20180413_092043.jpg

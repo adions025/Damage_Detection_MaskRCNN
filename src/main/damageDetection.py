@@ -62,7 +62,7 @@ class DamageConfig(Config):
     IMAGES_PER_GPU = 2
 
     # Number of classes (including background)
-    NUM_CLASSES = 1 + 1  # Background + toy
+    NUM_CLASSES = 1 + 13  # Background + toy
 
     # Number of training steps per epoch
     STEPS_PER_EPOCH = 1000
@@ -83,7 +83,22 @@ class DamageDataset(utils.Dataset):
         subset: Subset to load: train or val
         """
         # Add classes. We have only one class to add.
-        self.add_class("damage", 1, "damage")
+        #class_names = ['BG', 'Erosion 1', 'Erosion 2', 'Erosion 3', 'SD', 'SD 1', 'SD 2', 'SD 3', 'B&C', 'B&C 1',
+        #               'B&C 2', 'B&C 3', 'B&C 4', 'Dirt']
+        # Naming the dataset nucleus, and the class nucleus
+        self.add_class("damage", 1, "Erosion 1")
+        self.add_class("damage", 2, "Erosion 2")
+        self.add_class("damage", 3, "Erosion 3")
+        self.add_class("damage", 4, "SD")
+        self.add_class("damage", 5, "SD 1")
+        self.add_class("damage", 6, "SD 2")
+        self.add_class("damage", 7, "SD 3")
+        self.add_class("damage", 8, "B&C")
+        self.add_class("damage", 9, "B&C 1")
+        self.add_class("damage", 10, "B&C 2")
+        self.add_class("damage", 11, "B&C 3")
+        self.add_class("damage", 12, "B&C 4")
+        self.add_class("damage", 13, "Dirt")
 
         # Train or validation dataset?
         assert subset in ["train", "val"]
@@ -120,7 +135,7 @@ class DamageDataset(utils.Dataset):
 
         # Add images
         for a in annotations:
-            print(a)
+            #print(a)
             # Get the x, y coordinaets of points of the polygons that make up
             # the outline of each object instance. There are stores in the
             # shape_attributes (see json format above)
@@ -200,7 +215,7 @@ def train(model):
     print("Training network heads")
     model.train(dataset_train, dataset_val,
                 learning_rate=config.LEARNING_RATE,
-                epochs=100,
+                epochs=20,
                 layers='heads')
 
 

@@ -49,7 +49,9 @@ class InferenceConfig(damageDetection.DamageConfig):
 config = InferenceConfig()
 model = modellib.MaskRCNN(mode="inference", model_dir=MODEL_DIR, config=config)
 model.load_weights(DAMAGE_DETECTION_MODEL, by_name=True)
-class_names = ['BG', 'damage']
+
+class_names = ['BG','Erosion 1','Erosion 2','Erosion 3','SD','SD 1', 'SD 2', 'SD 3','B&C','B&C 1','B&C 2','B&C 3', 'B&C 4','Dirt']
+
 print("--------------------------------------------")
 print("Loading weights ", DAMAGE_DETECTION_MODEL)
 print("--------------------------------------------")
@@ -84,7 +86,7 @@ for img in imgs_list:
         results = model.detect([image], verbose=0)
         r = results[0]
         path = resultados+'/'+img_name
-        visualize.display_instances(path,image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
+        visualize.save_images(path,image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
 
         #visualize.save_image(image, img_name, r['rois'], r['masks'],
             #r['class_ids'],r['scores'],class_names,scores_thresh=0.9,mode=0)
