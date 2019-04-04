@@ -37,8 +37,8 @@ ROOT_DIR = os.path.abspath("../../")
 sys.path.append(ROOT_DIR)
 
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
-#DAMAGE_DETECTION_MODEL = os.path.join(ROOT_DIR, "logs/damage20190329T1140/mask_rcnn_damage_0100.h5")#workfistsprint
-DAMAGE_DETECTION_MODEL = os.path.join(ROOT_DIR, "logs/damage20190403T1717/mask_rcnn_damage_0050.h5")
+#DAMAGE_DETECTION_MODEL = os.path.join(ROOT_DIR, "logs/damage20190329T1140/mask_rcnn_damage_0100.h5")#workfistsprint-binary
+DAMAGE_DETECTION_MODEL = os.path.join(ROOT_DIR, "logs/damage20190403T2006/mask_rcnn_damage_0100.h5")#work-different classes
 val = os.path.join(ROOT_DIR, "dataset/val")
 resultados = os.path.join(ROOT_DIR, "dataset/results")
 
@@ -73,12 +73,7 @@ with open(val + '/imageval.txt', 'w') as f:  # /img/image.txt
 #read the new dataset and copy in results
 
 imgs_list = open(val+'/imageval.txt','r').readlines()
-''''
-for img in imgs_list:
-    if 'jpg' in img:
-        img_name = img.strip().split('/')[-1]
-        os.system('cp'+ ' '+ val+'/'+img_name + ' '+resultados)
-'''
+
 #save the images in /results
 for img in imgs_list:
     if 'jpg' in img:

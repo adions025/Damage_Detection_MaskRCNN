@@ -27,7 +27,9 @@ TEST_MODE = "inference"
 ROOT_DIR = os.path.abspath("../../")
 sys.path.append(ROOT_DIR)
 DAMAGE_DETECTION_DIR = os.path.join(ROOT_DIR, "logs")
-DAMAGE_WEIGHTS_PATH = os.path.join(ROOT_DIR, "logs/damage20190403T1717/mask_rcnn_damage_0050.h5")
+#DAMAGE_WEIGHTS_PATH = os.path.join(ROOT_DIR, "logs/damage20190403T1717/mask_rcnn_damage_0050.h5")
+DAMAGE_WEIGHTS_PATH = os.path.join(ROOT_DIR, "logs/damage20190403T2006/mask_rcnn_damage_0100.h5")
+
 val = os.path.join(ROOT_DIR, "dataset/val")
 
 config = damageDetection.DamageConfig()
@@ -59,7 +61,7 @@ model.load_weights(DAMAGE_WEIGHTS_PATH, by_name=True)
 print("Images: {}\nClasses: {}".format(len(dataset.image_ids), dataset.class_names))
 
 #class_names = ['BG','Erosion','SD', 'B&C','Dirt']
-path = os.path.join(ROOT_DIR, "dataset/val/DSC_9535.jpg")
+path = os.path.join(ROOT_DIR, "dataset/val/IMG_20180413_092939.jpg")
 image = skimage.io.imread(path)
 
 # Run detection

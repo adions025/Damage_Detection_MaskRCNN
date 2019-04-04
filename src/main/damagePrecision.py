@@ -38,7 +38,9 @@ TEST_MODE = "inference"
 ROOT_DIR = os.path.abspath("../../")
 sys.path.append(ROOT_DIR)
 DAMAGE_DETECTION_DIR = os.path.join(ROOT_DIR, "logs")
-DAMAGE_WEIGHTS_PATH = os.path.join(ROOT_DIR, "logs/damage20190319T1825/mask_rcnn_damage_0020.h5")
+#DAMAGE_WEIGHTS_PATH = os.path.join(ROOT_DIR, "logs/damage20190319T1825/mask_rcnn_damage_0020.h5")
+DAMAGE_WEIGHTS_PATH = os.path.join(ROOT_DIR, "logs/damage20190403T2006/mask_rcnn_damage_0100.h5")#work-different classes
+
 
 config = damageDetection.DamageConfig()
 DAMAGE_DIR = os.path.join(ROOT_DIR, "dataset/")
@@ -115,7 +117,7 @@ print("-------------------------------------------------------------------------
 
 
 # Draw precision-recall curve
-image_ids = np.random.choice(dataset.image_ids, 7)
+image_ids = np.random.choice(dataset.image_ids, 29)
 APs = []
 
 for image_id in image_ids:
