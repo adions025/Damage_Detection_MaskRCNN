@@ -33,11 +33,13 @@ $ python damageDetection.py train --dataset=/home/student_5/workspace/Mask_RCNN/
 convert your annotations xml to json for diferences regions:
 * you can also find this file inside of dataset folder, just run this file
 ###[ConverterXMLtoJson.py](https://github.com/adions025/XMLtoJson_Mask_RCNN) [moreinfo]
+  
   ```
   $ python converterXMLtoJSON.py
    ```
- * before run put your images .jpg and your .xml file inside /train and /val
- * you need to have this structure :
+   
+ - before run put your images .jpg and your .xml file inside /train and /val
+ - you need to have this structure :
  
   - /Mask_rcnn
     * /dataset
@@ -45,7 +47,7 @@ convert your annotations xml to json for diferences regions:
         * /val
         * converterXMLtoJson.py
         
- * after run you will have one file dataset.json in /val and /train
+ 
            
      
    
