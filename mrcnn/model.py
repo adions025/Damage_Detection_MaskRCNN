@@ -2345,13 +2345,9 @@ class MaskRCNN():
                                             verbose=0, save_weights_only=True, period=20),
         ]
 
-
-
         #custom_callbacks = [
         #    keras.callbacks.TensorBoard(log_dir=self.log_dir,write_grads=True,histogram_freq=1),
         #   ]
-
-
 
         # Add custom callbacks to the list
         if custom_callbacks:
@@ -2371,6 +2367,7 @@ class MaskRCNN():
             workers = 0
         else:
             workers = multiprocessing.cpu_count()
+            workers = 8
 
         self.keras_model.fit_generator(
             train_generator,

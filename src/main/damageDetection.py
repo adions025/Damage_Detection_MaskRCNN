@@ -62,7 +62,7 @@ class DamageConfig(Config):
     IMAGES_PER_GPU = 2
 
     # Number of classes (including background)
-    NUM_CLASSES = 1 + 13  # Background + toy
+    NUM_CLASSES = 1 + 4  # Background + toy
 
     # Number of training steps per epoch
     STEPS_PER_EPOCH = 1000
@@ -86,19 +86,10 @@ class DamageDataset(utils.Dataset):
         #class_names = ['BG', 'Erosion 1', 'Erosion 2', 'Erosion 3', 'SD', 'SD 1', 'SD 2', 'SD 3', 'B&C', 'B&C 1',
         #               'B&C 2', 'B&C 3', 'B&C 4', 'Dirt']
         # Naming the dataset nucleus, and the class nucleus
-        self.add_class("damage", 1, "Erosion 1")
-        self.add_class("damage", 2, "Erosion 2")
-        self.add_class("damage", 3, "Erosion 3")
-        self.add_class("damage", 4, "SD")
-        self.add_class("damage", 5, "SD 1")
-        self.add_class("damage", 6, "SD 2")
-        self.add_class("damage", 7, "SD 3")
-        self.add_class("damage", 8, "B&C")
-        self.add_class("damage", 9, "B&C 1")
-        self.add_class("damage", 10, "B&C 2")
-        self.add_class("damage", 11, "B&C 3")
-        self.add_class("damage", 12, "B&C 4")
-        self.add_class("damage", 13, "Dirt")
+        self.add_class("damage", 1, "Erosion")
+        self.add_class("damage", 2, "SD")
+        self.add_class("damage", 3, "B&C")
+        self.add_class("damage", 4, "Dirt")
 
         # Train or validation dataset?
         assert subset in ["train", "val"]
@@ -121,13 +112,13 @@ class DamageDataset(utils.Dataset):
         # }
         # We mostly care about the x and y coordinates of each region
         annotations1 = json.load(open(os.path.join(dataset_dir, "dataset.json")))
-        print(annotations1)
+        #print(annotations1)
         annotations = list(annotations1.values())  # don't need the dict keys
 
         #self.dataset_size = len(image_ids)
 
         print("------------------------")
-        print(annotations)
+        #print(annotations)
         print("------------------------")
         # The VIA tool saves images in the JSON even if they don't have any
         # annotations. Skip unannotated images.
@@ -142,6 +133,22 @@ class DamageDataset(utils.Dataset):
             polygons = [r['shape_attributes'] for r in a['regions'].values()]
 
 
+            names = [r['region_attributes'] for r in a['regions'].values()]
+
+            class_ids = np.zeros([len(names)])
+
+            for i, p in enumerate(names):
+                if p['name'] == 'Erosion':
+                    class_ids[i] = 1
+                elif p['name'] == 'SD':
+                    class_ids[i] = 2
+                elif p['name'] == 'B&C':
+                    class_ids[i] = 3
+                elif p['name'] == 'Dirt':
+                    class_ids[i] = 4
+
+            class_ids = class_ids.astype(int)
+
             # load_mask() needs the image size to convert polygons to masks.
             # Unfortunately, VIA doesn't include it in JSON, so we must read
             # the image. This is only managable since the dataset is tiny.
@@ -154,7 +161,9 @@ class DamageDataset(utils.Dataset):
                 image_id=a['filename'],  # use file name as a unique image id
                 path=image_path,
                 width=width, height=height,
-                polygons=polygons)
+                polygons=polygons,
+                names=names,
+                class_ids=class_ids)
 
     def load_mask(self, image_id):
         """Generate instance masks for an image.
@@ -171,16 +180,42 @@ class DamageDataset(utils.Dataset):
         # Convert polygons to a bitmap mask of shape
         # [height, width, instance_count]
         info = self.image_info[image_id]
+        print("--------------------")
+        print(info)
+        print("--------------------")
+        class_names = info["names"]
         mask = np.zeros([info["height"], info["width"], len(info["polygons"])],
                         dtype=np.uint8)
         for i, p in enumerate(info["polygons"]):
             # Get indexes of pixels inside the polygon and set them to 1
             rr, cc = skimage.draw.polygon(p['all_points_y'], p['all_points_x'])
             mask[rr, cc, i] = 1
+        '''
+        self.add_class("damage", 1, "Erosion")
+        self.add_class("damage", 2, "SD")
+        self.add_class("damage", 3, "B&C")
+        self.add_class("damage", 4, "Dirt")
+        
+        '''
+        class_ids = np.zeros([len(info["polygons"])])
+
+        for i, p in enumerate(class_names):
+            if p['name'] == 'Erosion':
+                class_ids[i] = 1
+            elif p['name'] == 'SD':
+                 class_ids[i] = 2
+            elif p['name'] == 'B&C':
+                class_ids[i] = 3
+            elif p['name'] == 'Dirt':
+                class_ids[i] = 4
+
+        class_ids = class_ids.astype(int)
 
         # Return mask, and array of class IDs of each instance. Since we have
         # one class ID only, we return an array of 1s
-        return mask.astype(np.bool), np.ones([mask.shape[-1]], dtype=np.int32)
+
+        #return mask.astype(np.bool), np.ones([mask.shape[-1]], dtype=np.int32)
+        return mask.astype(np.bool), class_ids
 
     def image_reference(self, image_id):
         """Return the path of the image."""
@@ -215,7 +250,7 @@ def train(model):
     print("Training network heads")
     model.train(dataset_train, dataset_val,
                 learning_rate=config.LEARNING_RATE,
-                epochs=20,
+                epochs=100,
                 layers='heads')
 
 
@@ -240,6 +275,8 @@ def color_splash(image, mask):
 
 def detect_and_color_splash(model, image_path=None, video_path=None):
     assert image_path or video_path
+
+    class_names = ['BG', 'Erosion', 'SD', 'B&C', 'Dirt']
 
     # Image or video?
     if image_path:

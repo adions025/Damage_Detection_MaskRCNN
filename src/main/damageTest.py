@@ -27,7 +27,7 @@ TEST_MODE = "inference"
 ROOT_DIR = os.path.abspath("../../")
 sys.path.append(ROOT_DIR)
 DAMAGE_DETECTION_DIR = os.path.join(ROOT_DIR, "logs")
-DAMAGE_WEIGHTS_PATH = os.path.join(ROOT_DIR, "logs/damage20190402T1016/mask_rcnn_damage_0020.h5")
+DAMAGE_WEIGHTS_PATH = os.path.join(ROOT_DIR, "logs/damage20190403T1717/mask_rcnn_damage_0050.h5")
 val = os.path.join(ROOT_DIR, "dataset/val")
 
 config = damageDetection.DamageConfig()
@@ -56,12 +56,10 @@ with tf.device(DEVICE):
 print("Loading weights ", DAMAGE_WEIGHTS_PATH)
 model.load_weights(DAMAGE_WEIGHTS_PATH, by_name=True)
 
+print("Images: {}\nClasses: {}".format(len(dataset.image_ids), dataset.class_names))
 
-class_names = ['BG','Erosion 1','Erosion 2','Erosion 3','SD','SD 1', 'SD 2', 'SD 3','B&C','B&C 1','B&C 2','B&C 3', 'B&C 4','Dirt']
-
-path = os.path.join(ROOT_DIR, "dataset/val/IMG_20180413_094756.jpg")
-
-
+#class_names = ['BG','Erosion','SD', 'B&C','Dirt']
+path = os.path.join(ROOT_DIR, "dataset/val/DSC_9535.jpg")
 image = skimage.io.imread(path)
 
 # Run detection
@@ -70,4 +68,4 @@ results = model.detect([image], verbose=0)
 # Visualize results
 r = results[0]
 visualize.display_instances(image, r['rois'], r['masks'], r['class_ids'],
-                            class_names, r['scores'])
+                            dataset.class_names, r['scores'])

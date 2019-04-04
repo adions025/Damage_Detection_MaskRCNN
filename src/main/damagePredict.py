@@ -37,7 +37,8 @@ ROOT_DIR = os.path.abspath("../../")
 sys.path.append(ROOT_DIR)
 
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
-DAMAGE_DETECTION_MODEL = os.path.join(ROOT_DIR, "logs/damage20190329T1140/mask_rcnn_damage_0100.h5")
+#DAMAGE_DETECTION_MODEL = os.path.join(ROOT_DIR, "logs/damage20190329T1140/mask_rcnn_damage_0100.h5")#workfistsprint
+DAMAGE_DETECTION_MODEL = os.path.join(ROOT_DIR, "logs/damage20190403T1717/mask_rcnn_damage_0050.h5")
 val = os.path.join(ROOT_DIR, "dataset/val")
 resultados = os.path.join(ROOT_DIR, "dataset/results")
 
@@ -50,7 +51,7 @@ config = InferenceConfig()
 model = modellib.MaskRCNN(mode="inference", model_dir=MODEL_DIR, config=config)
 model.load_weights(DAMAGE_DETECTION_MODEL, by_name=True)
 
-class_names = ['BG','Erosion 1','Erosion 2','Erosion 3','SD','SD 1', 'SD 2', 'SD 3','B&C','B&C 1','B&C 2','B&C 3', 'B&C 4','Dirt']
+class_names = ['BG','Erosion','SD','B&C', 'Dirt']
 
 print("--------------------------------------------")
 print("Loading weights ", DAMAGE_DETECTION_MODEL)
