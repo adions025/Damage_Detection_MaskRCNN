@@ -46,7 +46,7 @@ convert your annotations xml to json for diferences regions:
         * /val
         * converterXMLtoJson.py
         
- 
+
  ### Versioning:
  * You can use binary segmentation version or multiclass, just use **version.sh** file
  * Make sure that this file has the necessary execution permissions.
@@ -55,9 +55,20 @@ convert your annotations xml to json for diferences regions:
      ```
  * You will get two folders with the different code versions in the previous path.
            
+           
 ### Additional information:
 * Mask R-CNN needs eggs, run you setup.py file to generate again.
-* If you have installation problems, you can use my same enviroment (enviroment.yml) conda.
+* If you have installation problems, you can use the same enviroment (enviroment.yml) conda.
+    ```
+    $ conda env create -f environment.yml
+    ```
+* You can now activate the enviroment 
+    ```
+    $ cconda activate myenv
+    ```
+* You can find more info about how to manage conda enviroments [Creating an enviroment from an enviroment.yml file](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) [moreinfo]
+
+ 
 
 
    
