@@ -47,7 +47,7 @@ convert your annotations xml to json for diferences regions:
         * converterXMLtoJson.py
         
 
- ### Versioning:
+## Versioning
  * You can use binary segmentation version or multiclass, just use **version.sh** file
  * Make sure that this file has the necessary execution permissions.
      ```
@@ -69,7 +69,9 @@ convert your annotations xml to json for diferences regions:
 * You can find more info about how to manage conda enviroments [Creating an enviroment from an enviroment.yml file](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) [moreinfo]
 
  
+## Authors
 
+* **Adonis González Godoy** - *object instance segmentation* - [NHL Stenden University](https://github.com/adions025)
 
    
 
