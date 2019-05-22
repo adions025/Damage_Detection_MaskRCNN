@@ -7,7 +7,7 @@ Python 3.4, TensorFlow 1.3, Keras 2.0.8 and other common packages listed in `req
 ## Installation
 1. Clone this repository
   ```
-  $ git clone https://adonisgonzalez@bitbucket.org/aicomputervision/damagedetectionwindmill.git
+  $ git clone http://141.252.12.43/adions025/maskrcnn.git
    ```
 2. Install dependencies
  ```
@@ -15,7 +15,7 @@ Python 3.4, TensorFlow 1.3, Keras 2.0.8 and other common packages listed in `req
  ```
 3. Run setup from the repository root directory
  ```bash
-    python3 setup.py install
+    python setup.py install
  ``` 
 
 
@@ -31,8 +31,7 @@ $ python damageDetection.py train --dataset=/home/student_5/workspace/Mask_RCNN/
 
 ### if your annotations are made by labelimg you need to use this:
 convert your annotations xml to json for diferences regions:
-* you can also find this file inside of dataset folder, just run this file
-###[ConverterXMLtoJson.py](https://github.com/adions025/XMLtoJson_Mask_RCNN) [moreinfo]
+* you can also find this file inside of dataset folder, just run this file [ConverterXMLtoJson.py](https://github.com/adions025/XMLtoJson_Mask_RCNN) [moreinfo]
   
   ```
   $ python converterXMLtoJSON.py
@@ -48,8 +47,19 @@ convert your annotations xml to json for diferences regions:
         * converterXMLtoJson.py
         
  
+ ### Versioning:
+ * You can use binary segmentation version or multiclass, just use **version.sh** file
+ * Make sure that this file has the necessary execution permissions.
+     ```
+     chmod +x versions.sh
+     ```
+ * You will get two folders with the different code versions in the previous path.
            
-     
+### Additional information:
+* Mask R-CNN needs eggs, run you setup.py file to generate again.
+* If you have installation problems, you can use my same enviroment (enviroment.yml) conda.
+
+
    
 
 
